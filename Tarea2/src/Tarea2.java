@@ -18,42 +18,9 @@ class Comprador{
 
 }
 //___________________________________EXPENDEDOR___________________________________//
-class Expendedor{
-    private ArrayList<Bebida> DepositoBebidas;
-    public Bebida comprarBebida(Moneda m, int cual){
-    
-    }
-    //Insertar excepciones
-    public Moneda getVuelto(){
-    }
-    public Expendedor(int numBebidas, int precio){
-        this.DepositoCoca = new ArrayList<Bebida>(cantidad);
-        this.DepositoSprite = new ArrayList<Bebida>(cantidad);
-        this.DepositoFanta = new ArrayList<Bebida>(cantidad);
-    }
-}
-
-//___________________________________DEPOSITO___________________________________//
-class Deposito{
-    private int precio;
-    private ArrayList<CocaCola> DepositoCoca;
-    private ArrayList<Sprite> DepositoSprite;
-    private ArrayList<Fanta> DepositoFanta;
-    private ArrayList<LimonSoda> DepositoLimonSoda;
-    public Deposito(int cantidad, int precio){
-        this.precio = precio;
-        DepositoCoca = new ArrayList<CocaCola>();
-        DepositoSprite = new ArrayList<Sprite>();
-        DepositoFanta = new ArrayList<Fanta>();
-        DepositoLimonSoda = new ArrayList<LimonSoda>();
-        for(int i=0 ; i<cantidad ; i++){
-            DepositoCoca.add(new CocaCola(i));
-            DepositoSprite.add(new Sprite(i+cantidad));
-            DepositoFanta.add(new Fanta(i+(cantidad*2)));
-            DepositoLimonSoda.add(new LimonSoda(i+(cantidad*3)));
-        }
-    }
-    public Bebida getBebida(int BebidaElegida){
+class Expendedor extends Deposito{
+    private int precioBebidas;
+    public Bebida ComprarBebida(int BebidaElegida, Moneda m){
         switch(BebidaElegida){
             case 1:
                 if(DepositoCoca.isEmpty()){
@@ -79,6 +46,36 @@ class Deposito{
                 }else{
                     return DepositoLimonSoda.remove(0);     
                 }
+        }
+        // Añadir Excepcion Aca y borrar return
+        return null;
+    }
+    //Insertar excepciones
+    public Moneda getVuelto(){
+    return new Moneda100();
+    }
+    public Expendedor(int numBebidas, int precioBebidas){
+        super(numBebidas);
+        this.precioBebidas = precioBebidas;
+    }
+}
+
+//___________________________________DEPOSITO___________________________________//
+abstract class Deposito{
+    protected ArrayList<CocaCola> DepositoCoca;
+    protected ArrayList<Sprite> DepositoSprite;
+    protected ArrayList<Fanta> DepositoFanta;
+    protected ArrayList<LimonSoda> DepositoLimonSoda;
+    protected Deposito(int cantidad){
+        DepositoCoca = new ArrayList<>();
+        DepositoSprite = new ArrayList<>();
+        DepositoFanta = new ArrayList<>();
+        DepositoLimonSoda = new ArrayList<>();
+        for(int i=0 ; i<cantidad ; i++){
+            DepositoCoca.add(new CocaCola(i));
+            DepositoSprite.add(new Sprite(i+cantidad));
+            DepositoFanta.add(new Fanta(i+(2*cantidad)));
+            DepositoLimonSoda.add(new LimonSoda(i+(3*cantidad)));
         }
     }
 }
