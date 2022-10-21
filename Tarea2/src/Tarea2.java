@@ -1,29 +1,24 @@
 package tarea2;
 import java.util.ArrayList;
+
 public class Tarea2 {
-
     public static void main(String[] args) {
-            System.out.println("aaaa");
-    }
-    
+            
+    }   
 }
 
+//___________________________________COMPRADOR___________________________________//
 class Comprador{
-    private int bebidaElegida;
-    public int cuantoVuelto(){
-    }
-    public String queBebiste(){
-    }
-    public Comprador(Moneda m, int bebidaElegida, Expendedor expendedor){
-        this.bebidaElegida = bebidaElegida;
+    private int vuelto;
+    private String sabor;
+    public Comprador(Moneda moneda, int BebidaElegida, Expendedor expendedor){
+        
     }
 
 }
-
+//___________________________________EXPENDEDOR___________________________________//
 class Expendedor{
-    private ArrayList<Bebida> DepositoCoca;
-    private ArrayList<Bebida> DepositoSprite;
-    private ArrayList<Bebida> DepositoFanta;
+    private ArrayList<Bebida> DepositoBebidas;
     public Bebida comprarBebida(Moneda m, int cual){
     
     }
@@ -37,6 +32,7 @@ class Expendedor{
     }
 }
 
+//___________________________________BEBIDAS___________________________________//
 abstract class Bebida{
     private int numSerie;
     public int getSerie(){
@@ -49,51 +45,70 @@ abstract class Bebida{
 }
 
 class CocaCola extends Bebida{
-    private int numSerie;
+    @Override
+    public String beber(){
+        return "CocaCola";
+    }
     public CocaCola(int numSerie){
         super(numSerie);
     }
 }
 
 class Sprite extends Bebida{
-    private int numSerie;
+    @Override
+    public String beber(){
+        return "Sprite";
+    }
     public Sprite(int numSerie){
         super(numSerie);
     }
 }
 
 class Fanta extends Bebida{
-    private int numSerie;
+    @Override
+    public String beber(){
+        return "Fanta";
+    }
     public Fanta(int numSerie){
         super(numSerie);
     }
 }
 
-abstract class Moneda{
-    public getSerie(){
+class LimonSoda extends Bebida{
+    @Override
+    public String beber(){
+        return "LimonSoda";
     }
-    public Moneda(){
+    public LimonSoda(int numSerie){
+        super(numSerie);
+    }
+}
+
+//___________________________________MONEDAS___________________________________//
+abstract class Moneda{
+    private int valor;
+    public int getValor(){
+        return valor;
+    }
+    public Moneda(int valor){
+        this.valor = valor;
     }
 }
 
 class Moneda1000 extends Moneda{
-    public Moneda()1000{
-    }
-    public int getValor(){
-        return 1000;
+    public Moneda1000(){
+        super(1000);
     }
 }
+
 class Moneda500 extends Moneda{
-    public Moneda()500{
-    }
-    public int getValor(){
-        return 500;
+    public Moneda500(){
+        super(500);
     }
 }
+
 class Moneda100 extends Moneda{
-    public Moneda()100{
-    }
-    public int getValor(){
-        return 100;
+    public Moneda100(){
+        super(100);
     }
 }
