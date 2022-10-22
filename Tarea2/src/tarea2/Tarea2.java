@@ -17,7 +17,7 @@ public class Tarea2 {
         System.out.println(c1.queBebiste() + "  Y  " + c1.cuantoVuelto());
     }   
 }
-//___________________________________EXCEPCIONES________________________________//
+//__________________________________EXCEPCIONES________________________________//
 
 class PagoIncorrectoException extends RuntimeException{
     public PagoIncorrectoException(){}
