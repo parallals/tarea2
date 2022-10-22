@@ -11,19 +11,18 @@ public class Tarea2 {
         Moneda100 m3 = new Moneda100();
         System.out.println(m3.getValor() + "  Y  " + m1.getSerie());
         // Expendor
-        Expendedor e1 = new Expendedor(0, 500);
+        Expendedor e1 = new Expendedor(3, 500);
         // Comprador
-        Comprador c1 = new Comprador(m2, 2, e1);
+        Comprador c1 = new Comprador(m1, 2, e1);
         System.out.println(c1.queBebiste() + "  Y  " + c1.cuantoVuelto());
     }   
 }
-//__________________________________EXCEPCIONES________________________________//
 
+//__________________________________EXCEPCIONES________________________________//
 class PagoIncorrectoException extends RuntimeException{
     public PagoIncorrectoException(){}
     public PagoIncorrectoException(String mensaje){
         super(mensaje);
-        
     }
 }
 
@@ -33,12 +32,21 @@ class PagoInsuficienteException extends RuntimeException{
         super(mensaje);
     }
 }
+
 class NoHayBebidaException extends RuntimeException{
     public NoHayBebidaException(){}
     public NoHayBebidaException(String mensaje){
         super(mensaje);
     }
 }
+
+class EleccionInexistenteException extends RuntimeException{
+    public EleccionInexistenteException(){}
+    public EleccionInexistenteException(String mensaje){
+        super(mensaje);
+    }
+}
+
 //___________________________________COMPRADOR___________________________________//
 class Comprador{
     private int vuelto;
@@ -71,10 +79,11 @@ class Comprador{
         this.sabor =  bebida.beber();
     }
 }
+
 //___________________________________EXPENDEDOR___________________________________//
 class Expendedor extends Deposito{
     private final int precioBebidas;
-    public Bebida ComprarBebida(int BebidaElegida, Moneda moneda) throws PagoIncorrectoException,PagoInsuficienteException{
+    public Bebida ComprarBebida(int BebidaElegida, Moneda moneda){
         if(moneda == null){
             throw new PagoIncorrectoException("Inserte moneda valida");
         }else if(moneda.getValor() < precioBebidas){
@@ -128,9 +137,8 @@ class Expendedor extends Deposito{
                     return DepositoCoca.remove(0);
                 }
             }default -> {
-                // Añadir EleccionIncorrectaException
                 DepositoVuelto.add(moneda);
-                return null;
+                throw new EleccionInexistenteException("Seleccione:  1.-CocaCola   2.-Sprite   3.-Fanta   4.-LimonSoda");
             }
         }
     }
