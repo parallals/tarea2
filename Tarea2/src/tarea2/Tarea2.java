@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class Tarea2 {
     public static void main(String[] args) {
-        // Monedas
+        // Monedas      
         Moneda1000 m1 = new Moneda1000();
         System.out.println(m1.getValor() + "  Y  " + m1.getSerie());
         Moneda500 m2 = new Moneda500();
@@ -15,6 +15,13 @@ public class Tarea2 {
         // Comprador
         Comprador c1 = new Comprador(m1, 2, e1);
         System.out.println(c1.queBebiste() + "  Y  " + c1.cuantoVuelto());
+        e1.ComprarBebida(1, m3);
+        System.out.println(e1.getVuelto());
+        System.out.println(e1.getVuelto());
+        System.out.println(e1.getVuelto());
+        System.out.println(e1.getVuelto());
+        System.out.println(e1.getVuelto());
+        System.out.println(e1.getVuelto());
     }   
 }
 
@@ -32,9 +39,11 @@ class Comprador{
         this.vuelto = 0;
         for(int i=0 ; i<10 ; i++){
             Moneda Aux = expendedor.getVuelto();
-            this.vuelto = this.vuelto + Aux.getValor();
-        }
+            if(Aux != null){
+                this.vuelto = this.vuelto + Aux.getValor();
+            }
         this.sabor =  expendedor.ComprarBebida(BebidaElegida, moneda).beber();
+        }
     }
     public Comprador(Moneda moneda, int BebidaElegida, Expendedor expendedor){
         Bebida bebida = expendedor.ComprarBebida(BebidaElegida, moneda);
@@ -127,7 +136,7 @@ class Expendedor extends Deposito{
     public Expendedor(int numBebidas, int precioBebidas){
         super(numBebidas);
         this.precioBebidas = precioBebidas;
-        
+
     }
 }
 
@@ -214,7 +223,7 @@ abstract class Moneda{
     public Moneda(){
     }
 
-    
+
 }
 
 class Moneda1000 extends Moneda{
