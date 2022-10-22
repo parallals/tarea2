@@ -1,0 +1,13 @@
+tarea2.Bebida
+tarea2.Tarea2
+tarea2.Deposito
+tarea2.Fanta
+tarea2.Moneda500
+tarea2.Sprite
+tarea2.Comprador
+tarea2.Moneda
+tarea2.CocaCola
+tarea2.Moneda100
+tarea2.LimonSoda
+tarea2.Expendedor
+tarea2.Moneda1000
