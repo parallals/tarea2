@@ -3,18 +3,61 @@ import java.util.ArrayList;
 
 public class Tarea2 {
     public static void main(String[] args) {
-        // Monedas      
+        //                  Prueba de algunas Clases
+        System.out.println("Monedas:");
         Moneda1000 m1 = new Moneda1000();
-        System.out.println(m1.getValor() + "  Y  " + m1.getSerie());
+        System.out.println("m1:  Valor = "+m1.getValor() + "  Y  Serie = " + m1.getSerie());
         Moneda500 m2 = new Moneda500();
-        System.out.println(m2.getValor() + "  Y  " + m1.getSerie());
+        System.out.println("m2:  Valor = "+m2.getValor() + "  Y  Serie = " + m2.getSerie());
         Moneda100 m3 = new Moneda100();
-        System.out.println(m3.getValor() + "  Y  " + m1.getSerie());
-        // Expendor
-        Expendedor e1 = new Expendedor(3, 500);
-        // Comprador
+        System.out.println("m3:  Valor = "+m3.getValor() + "  Y  Serie = " + m3.getSerie());
+        Moneda1000 m4 = new Moneda1000();
+        System.out.println("m4:  Valor = "+m4.getValor() + "  Y  Serie = " + m4.getSerie()+"\n");
+        Moneda1000 m5 = new Moneda1000();
+        System.out.println("m5:  Valor = "+m5.getValor() + "  Y  Serie = " + m5.getSerie()+"\n");
+        Moneda1000 m6 = new Moneda1000();
+        System.out.println("m6:  Valor = "+m6.getValor() + "  Y  Serie = " + m6.getSerie()+"\n");
+       
+        //                   Caso 1:
+        System.out.println("Caso 1: Compra Exitosa!");
+        System.out.println("Expendedor con 1 bebida con un valor de 700 pesos y comprador paga con 1000 pesos una Sprite");
+        Expendedor e1 = new Expendedor(1, 700);
         Comprador c1 = new Comprador(m1, 2, e1);
-        System.out.println(c1.queBebiste() + "  Y  " + c1.cuantoVuelto());
+        System.out.println("Bebi "+c1.queBebiste() + " y me devolvieron " + c1.cuantoVuelto() + " pesos \n");
+        
+        //                   Caso 2:
+        System.out.println("Caso 2: PagoInsuficienteException");
+        System.out.println("Expendedor con 1 bebida con un valor de 700 pesos y comprador paga con 100 pesos una CocaCola");
+        Comprador c2 = new Comprador(m3, 1, e1);
+        System.out.println("Bebi "+c2.queBebiste() + " y me devolvieron " + c2.cuantoVuelto()+" pesos\n");
+        
+        //                   Caso 3:
+        System.out.println("Caso 3: PagoIncorrectoException");
+        System.out.println("Expendedor con 1 bebida con un valor de 700 pesos y comprador paga con moneda falsa (null) una Fanta");
+        Comprador c3 = new Comprador(null, 3, e1);
+        System.out.println("Bebi "+c3.queBebiste() + " y me devolvieron " + c3.cuantoVuelto()+" pesos\n");
+        
+        //                   Caso 4:
+        System.out.println("Caso 4: NoHayBebidaException");
+        System.out.println("Expendedor sin bebidas con un valor de 400 pesos y comprador paga con moneda de 500 pesos una LimonSoda");
+        Expendedor e2 = new Expendedor(0, 400);
+        Comprador c4 = new Comprador(m2, 4, e2);
+        System.out.println("Bebi "+c4.queBebiste() + " y me devolvieron " + c4.cuantoVuelto()+" pesos\n");
+        
+        //                   Caso 5:
+        System.out.println("Caso 5: EleccionInexistenteException");
+        System.out.println("Expendedor con 3 bebidas con un valor de 900 pesos y comprador paga con moneda de 1000 pesos y marca una seleccion inexistente");
+        Expendedor e3 = new Expendedor(3, 900);
+        Comprador c5 = new Comprador(m4, 777, e3);
+        System.out.println("Bebi "+c5.queBebiste() + " y me devolvieron " + c5.cuantoVuelto()+" pesos\n");
+        
+        
+        //                   Prueba ComprarOtra:
+        System.out.println("Prueba metodo adicional para comprar otra bebida con el mismo comprador:");
+        c1.ComprarOtra(m5, 4, e1);
+        System.out.println("Bebi "+c1.queBebiste() + " y me devolvieron " + c1.cuantoVuelto()+" pesos");
+        c1.ComprarOtra(m6, 4, e1);
+        System.out.println("Bebi "+c1.queBebiste() + " y me devolvieron " + c1.cuantoVuelto()+" pesos\n");
     }   
 }
 
@@ -58,32 +101,51 @@ class Comprador{
         return sabor;
     }
     public void ComprarOtra(Moneda moneda, int BebidaElegida, Expendedor expendedor){
+        Bebida bebida;
+        try{
+            bebida = expendedor.ComprarBebida(BebidaElegida, moneda);
+            this.sabor =  bebida.beber();
+        } catch (NoHayBebidaException | PagoInsuficienteException | PagoIncorrectoException | EleccionInexistenteException e){
+            System.out.println(e.getMessage());
+            bebida = null;
+            this.sabor = null;
+        }
         this.vuelto = 0;
         for(int i=0 ; i<10 ; i++){
             Moneda Aux = expendedor.getVuelto();
             if(Aux != null){
                 this.vuelto = this.vuelto + Aux.getValor();
+            }else{
+                i=10;
             }
-        this.sabor =  expendedor.ComprarBebida(BebidaElegida, moneda).beber();
         }
     }
     public Comprador(Moneda moneda, int BebidaElegida, Expendedor expendedor){
-        Bebida bebida = expendedor.ComprarBebida(BebidaElegida, moneda);
+        Bebida bebida;
+        try{
+            bebida = expendedor.ComprarBebida(BebidaElegida, moneda);
+            this.sabor =  bebida.beber();
+        } catch (NoHayBebidaException | PagoInsuficienteException | PagoIncorrectoException | EleccionInexistenteException e){
+            System.out.println(e.getMessage());
+            bebida = null;
+            this.sabor = null;
+        }
         this.vuelto = 0;
         for(int i=0 ; i<10 ; i++){
             Moneda Aux = expendedor.getVuelto();
             if(Aux != null){
                 this.vuelto = this.vuelto + Aux.getValor();
+            }else{
+                i=10;
             }
         }
-        this.sabor =  bebida.beber();
     }
 }
 
 //___________________________________EXPENDEDOR___________________________________//
 class Expendedor extends Deposito{
     private final int precioBebidas;
-    public Bebida ComprarBebida(int BebidaElegida, Moneda moneda){
+    public Bebida ComprarBebida(int BebidaElegida, Moneda moneda) throws NoHayBebidaException, PagoInsuficienteException, PagoIncorrectoException, EleccionInexistenteException{
         if(moneda == null){
             throw new PagoIncorrectoException("Inserte moneda valida");
         }else if(moneda.getValor() < precioBebidas){
@@ -92,7 +154,7 @@ class Expendedor extends Deposito{
         }
         int Aux = (moneda.getValor()-precioBebidas)/100;
         switch(BebidaElegida){
-            case 1 -> {
+            case 1:
                 if(DepositoCoca.isEmpty()){
                     DepositoVuelto.add(moneda);
                     throw new NoHayBebidaException("No quedan CocaColas");
@@ -103,7 +165,7 @@ class Expendedor extends Deposito{
                     moneda = null;
                     return DepositoCoca.remove(0);
                 }
-            }case 2 -> {
+            case 2:
                 if(DepositoSprite.isEmpty()){
                     DepositoVuelto.add(moneda);
                     throw new NoHayBebidaException("No quedan Sprites");
@@ -112,9 +174,9 @@ class Expendedor extends Deposito{
                         DepositoVuelto.add(new Moneda100());
                     }
                     moneda = null;
-                    return DepositoCoca.remove(0);
+                    return DepositoSprite.remove(0);
                 }
-            }case 3 -> {
+            case 3:
                 if(DepositoFanta.isEmpty()){
                     DepositoVuelto.add(moneda);
                     throw new NoHayBebidaException("No quedan Fantas");
@@ -123,23 +185,23 @@ class Expendedor extends Deposito{
                         DepositoVuelto.add(new Moneda100());
                     }
                     moneda = null;
-                    return DepositoCoca.remove(0);
+                    return DepositoFanta.remove(0);
                 }
-            }case 4 -> {
+            case 4:
                 if(DepositoLimonSoda.isEmpty()){
                     DepositoVuelto.add(moneda);
-                    throw new NoHayBebidaException("No hay Limon Soda");
+                    throw new NoHayBebidaException("No quedan LimonSoda");
                 }else{
                     for(int i=0 ;  i<Aux  ; i++){
                         DepositoVuelto.add(new Moneda100());
                     }
                     moneda = null;
-                    return DepositoCoca.remove(0);
+                    return DepositoLimonSoda.remove(0);
                 }
-            }default -> {
+            default:
                 DepositoVuelto.add(moneda);
-                throw new EleccionInexistenteException("Seleccione:  1.-CocaCola   2.-Sprite   3.-Fanta   4.-LimonSoda");
-            }
+                throw new EleccionInexistenteException("Error de seleccion");
+            
         }
     }
     public Moneda getVuelto(){
@@ -238,8 +300,6 @@ abstract class Moneda{
     }
     public Moneda(){
     }
-
-
 }
 
 class Moneda1000 extends Moneda{
