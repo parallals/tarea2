@@ -12,9 +12,9 @@ public class Tarea2 {
         Moneda100 m3 = new Moneda100();
         System.out.println("m3:  Valor = "+m3.getValor() + "  Y  Serie = " + m3.getSerie());
         Moneda1000 m4 = new Moneda1000();
-        System.out.println("m4:  Valor = "+m4.getValor() + "  Y  Serie = " + m4.getSerie()+"\n");
+        System.out.println("m4:  Valor = "+m4.getValor() + "  Y  Serie = " + m4.getSerie());
         Moneda1000 m5 = new Moneda1000();
-        System.out.println("m5:  Valor = "+m5.getValor() + "  Y  Serie = " + m5.getSerie()+"\n");
+        System.out.println("m5:  Valor = "+m5.getValor() + "  Y  Serie = " + m5.getSerie());
         Moneda1000 m6 = new Moneda1000();
         System.out.println("m6:  Valor = "+m6.getValor() + "  Y  Serie = " + m6.getSerie()+"\n");
        
